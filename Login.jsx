@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-export function Login(){
+export function Login({onLogin}){
     const [username, setUsername]=useState('');
     const [password, setPassword]= useState('');
     const [remember, setRemember]= useState(false);
@@ -19,13 +19,15 @@ export function Login(){
     setRemember(event.target.checked);
     };
 
-    const handleLoginClick = () => {
+    const handleLogin = (event) => {
+      event.preventDefault();
       if (username && password) {
         onLogin({ username, password });
       }
     };
   
     const isLoginDisabled = !username || !password;
+
     const handleResetClick = () => {
       setUsername('');
       setPassword('');
@@ -35,12 +37,14 @@ export function Login(){
   return (
     <div>
         <h1>Login</h1>
-        <input name='username' value={username} placeholder="Username" onChange={handleUsernameChange}/>
-        <input name='password' value={password} type='password' placeholder="Password" onChange={handlePasswordChange}/>
-        <input name="remember" type = "checkbox" checked={remember} onChange={handleRememberChange}/>
-        <label for='remember'>Remember</label>
-        <button onClick={handleLoginClick}  disabled={isLoginDisabled}>Login</button>
-        <button onClick={handleResetClick}>Reset</button>
+            <form onSubmit={handleLogin}>
+            <input name='username' type="text" value={username} placeholder="Username" onChange={handleUsernameChange}/>
+            <input name='password' value={password} type='password' placeholder="Password" onChange={handlePasswordChange}/>
+            <input name="remember" type = "checkbox" checked={remember} onChange={handleRememberChange}/>
+            <label for='remember'>Remember</label>
+            <button type="submit"  disabled={isLoginDisabled}>Login</button>
+            <button type='button' onClick={handleResetClick}>Reset</button>
+            </form>
     </div>
   )
 }
