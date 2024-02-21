@@ -19,7 +19,14 @@ export function Login(){
     setRemember(event.target.checked);
     };
 
-
+    const handleLoginClick = () => {
+      if (username && password) {
+        onLogin({ username, password });
+      }
+    };
+  
+    const isLoginDisabled = !username || !password;
+    
   return (
     <div>
         <h1>Login</h1>
@@ -27,6 +34,7 @@ export function Login(){
         <input name='password' value={password} type='password' placeholder="Password" onChange={handlePasswordChange}/>
         <input name="remember" type = "checkbox" checked={remember} onChange={handleRememberChange}/>
         <label for='remember'>Remember</label>
+        <button onClick={handleLoginClick}  disabled={isLoginDisabled}>Login</button>
         {/* <button onClick={handleResetForm}>Reset</button> */}
     </div>
   )
